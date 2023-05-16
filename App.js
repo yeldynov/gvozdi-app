@@ -12,7 +12,19 @@ import SessionDetailScreen from './src/screens/SessionDetailScreen';
 import ResolveAuthScreen from './src/screens/ResolveAuthScreen';
 
 import { Provider as AuthProvider } from './src/context/AuthContext';
+import { Provider as SessionProvider } from './src/context/SessionContext';
 import { setNavigator } from './src/utils/navigationRef';
+import { FontAwesome } from '@expo/vector-icons';
+
+const sessionListFlow = createStackNavigator({
+  SessionList: SessionListScreen,
+  SessionDetail: SessionDetailScreen,
+});
+
+sessionListFlow.navigationOptions = {
+  title: 'История',
+  tabBarIcon: <FontAwesome name='th-list' size={24} color='white' />,
+};
 
 const switchNavigator = createSwitchNavigator({
   ResolveAuth: ResolveAuthScreen,
@@ -20,14 +32,18 @@ const switchNavigator = createSwitchNavigator({
     Signup: SignupScreen,
     Signin: SigninScreen,
   }),
-  mainFlow: createMaterialBottomTabNavigator({
-    sessionListFlow: createStackNavigator({
-      SessionList: SessionListScreen,
-      SessionDetail: SessionDetailScreen,
-    }),
-    SessionCreate: SessionCreateScreen,
-    Account: AccountScreen,
-  }),
+  mainFlow: createMaterialBottomTabNavigator(
+    {
+      sessionListFlow: sessionListFlow,
+      SessionCreate: SessionCreateScreen,
+      Account: AccountScreen,
+    },
+    {
+      barStyle: { backgroundColor: 'darkorange' },
+      activeColor: 'white',
+      inactiveColor: 'lightgray',
+    }
+  ),
 });
 
 const App = createAppContainer(switchNavigator);
@@ -35,11 +51,13 @@ const App = createAppContainer(switchNavigator);
 export default () => {
   return (
     <AuthProvider>
-      <App
-        ref={(navigator) => {
-          setNavigator(navigator);
-        }}
-      />
+      <SessionProvider>
+        <App
+          ref={(navigator) => {
+            setNavigator(navigator);
+          }}
+        />
+      </SessionProvider>
     </AuthProvider>
   );
 };

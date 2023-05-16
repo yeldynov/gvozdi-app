@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, Button, Input } from 'react-native-elements';
 import Spacer from './Spacer';
 
@@ -30,16 +30,28 @@ const AuthForm = ({ headerText, submitButtonText, errorMessage, onSubmit }) => {
       />
       {errorMessage && <Text style={styles.errorMessage}>{errorMessage}</Text>}
       <Spacer>
-        <Button
-          title={submitButtonText}
+        <TouchableOpacity
+          style={styles.button}
           onPress={() => onSubmit({ email, password })}
-        />
+        >
+          <Text style={styles.buttonText}>{submitButtonText}</Text>
+        </TouchableOpacity>
       </Spacer>
     </>
   );
 };
 
 const styles = StyleSheet.create({
+  button: {
+    backgroundColor: 'darkorange',
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: 'darkorange',
+  },
+  buttonText: { fontSize: 16, fontWeight: 'bold', color: 'white' },
   errorMessage: {
     fontSize: 16,
     color: 'red',
