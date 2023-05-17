@@ -14,27 +14,27 @@ import StopwatchTimer from 'react-native-animated-stopwatch-timer';
 import moment from 'moment';
 import { Context as SessionContext } from '../context/SessionContext';
 import { navigate } from '../utils/navigationRef';
+import FeedbackModal from './FeedbackModal';
 
 const Stopwatch = () => {
   const stopwatchTimerRef = useRef(null);
+  const { createSession } = useContext(SessionContext);
+
   const [isCounting, setIsCounting] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [feedback, setFeedback] = useState('');
-  const { createSession } = useContext(SessionContext);
 
   // Methods to control the stopwatch
   function play() {
     stopwatchTimerRef.current?.play();
     setIsCounting(true);
   }
-
   function pause() {
     stopwatchTimerRef.current?.pause();
     setIsCounting(false);
     setModalVisible(true);
     console.log(stopwatchTimerRef.current.getSnapshot());
   }
-
   function reset() {
     stopwatchTimerRef.current?.reset();
     setFeedback('');
@@ -57,37 +57,14 @@ const Stopwatch = () => {
         trailingZeros={2}
       />
       {!isCounting && (
-        <Modal
-          animationType='slide'
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-            setModalVisible(!modalVisible);
-          }}
-        >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text h2 style={styles.modalText}>
-                {moment(stopwatchTimerRef.current?.getSnapshot()).format(
-                  'mm:ss:ms'
-                )}{' '}
-              </Text>
-              <Input
-                value={feedback}
-                onChangeText={setFeedback}
-                label='Как вы себя чувствуете?'
-                placeholder=''
-              />
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={save}
-              >
-                <Text style={styles.textStyle}>Сохранить</Text>
-              </Pressable>
-            </View>
-          </View>
-        </Modal>
+        <FeedbackModal
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+          stopwatchTimerRef={stopwatchTimerRef}
+          feedback={feedback}
+          setFeedback={setFeedback}
+          onSave={save}
+        />
       )}
       {isCounting ? (
         <TouchableOpacity
@@ -133,44 +110,6 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   // Modal styles
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 10,
-    backgroundColor: 'lightgray',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonClose: {
-    backgroundColor: 'darkgreen',
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
-  },
 
   // Stopwatch styles
   stopWatchContainer: {

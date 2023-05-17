@@ -9,7 +9,12 @@ const SigninScreen = () => {
   const { state, signin, clearErrorMessage } = useContext(AuthContext);
 
   return (
-    <KeyboardAvoidingView behavior='height' style={styles.container}>
+    <KeyboardAvoidingView
+      behavior='height'
+      keyboardVerticalOffset={20}
+      enabled='false'
+      style={styles.container}
+    >
       <NavigationEvents onWillFocus={clearErrorMessage} />
       <AuthForm
         headerText='Войдите в аккаунт 🤙'

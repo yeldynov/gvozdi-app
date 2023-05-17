@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight * 2,
+    marginTop: StatusBar.currentHeight,
   },
 });
 

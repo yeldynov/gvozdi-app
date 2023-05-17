@@ -9,13 +9,19 @@ const SignupScreen = () => {
   const { state, signup, clearErrorMessage } = useContext(AuthContext);
 
   return (
-    <KeyboardAvoidingView behavior='height' style={styles.container}>
+    <KeyboardAvoidingView
+      behavior='height'
+      keyboardVerticalOffset={20}
+      enabled='false'
+      style={styles.container}
+    >
       <NavigationEvents onWillFocus={clearErrorMessage} />
       <AuthForm
         headerText='Создать аккаунт 😤'
         errorMessage={state.errorMessage}
         submitButtonText='Регистрация'
         onSubmit={signup}
+        isSignUp
       />
       <NavLink text='Уже есть аккаунт? Войти.' routeName='Signin' />
     </KeyboardAvoidingView>
