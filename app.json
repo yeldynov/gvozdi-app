@@ -1,31 +1,29 @@
 {
   "expo": {
-    "name": "client",
-    "slug": "client",
-    "version": "1.0.0",
+    "name": "Встань на гвозди!",
+    "slug": "gvozdi",
+    "version": "1.0.2",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/gvozdi-icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "image": "./assets/gvozdi-splash.png",
+      "resizeMode": "center",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/gvozdi-icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.shangnik.gvozdi"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/gvozdi-icon.png"
     },
     "extra": {
       "eas": {

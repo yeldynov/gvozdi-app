@@ -10,6 +10,7 @@ import SessionCreateScreen from './src/screens/SessionCreateScreen';
 import SessionListScreen from './src/screens/SessionListScreen';
 import SessionDetailScreen from './src/screens/SessionDetailScreen';
 import ResolveAuthScreen from './src/screens/ResolveAuthScreen';
+import StatisticsScreen from './src/screens/StatisticsScreen';
 
 import { Provider as AuthProvider } from './src/context/AuthContext';
 import { Provider as SessionProvider } from './src/context/SessionContext';
@@ -36,6 +37,7 @@ const switchNavigator = createSwitchNavigator({
     {
       sessionListFlow: sessionListFlow,
       SessionCreate: SessionCreateScreen,
+      Statistics: StatisticsScreen,
       Account: AccountScreen,
     },
     {

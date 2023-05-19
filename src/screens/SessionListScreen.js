@@ -7,12 +7,14 @@ import {
   StatusBar,
 } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
-import { ListItem, Text } from 'react-native-elements';
+import { Text } from 'react-native-elements';
 import { Context as SessionContext } from '../context/SessionContext';
 import Spacer from '../components/Spacer';
 import moment from 'moment';
 import 'moment/locale/ru';
 import Statistics from '../components/Statistics';
+import ListItem from '../components/ListItem';
+import Title from '../components/Title';
 
 const SessionListScreen = ({ navigation }) => {
   const { state, fetchSessions } = useContext(SessionContext);
@@ -20,10 +22,7 @@ const SessionListScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <NavigationEvents onWillFocus={fetchSessions} />
-      {/* <Statistics state={state} /> */}
-      <Text style={styles.title} h3>
-        История Гвоздестояний
-      </Text>
+      <Title>История Гвоздестояний</Title>
       <FlatList
         data={state}
         keyExtractor={(item) => item._id}
@@ -33,16 +32,9 @@ const SessionListScreen = ({ navigation }) => {
               onPress={() => {
                 navigation.navigate('SessionDetail', { _id: item._id });
               }}
+              style={styles.itemContainer}
             >
-              <ListItem bottomDivider>
-                <ListItem.Content>
-                  <ListItem.Title>{item.feedback}</ListItem.Title>
-                  <ListItem.Subtitle>
-                    {moment(item.date).format('MMM Do YY')}
-                  </ListItem.Subtitle>
-                </ListItem.Content>
-                <ListItem.Chevron />
-              </ListItem>
+              <ListItem item={item} />
             </TouchableOpacity>
           );
         }}
@@ -65,10 +57,24 @@ const styles = StyleSheet.create({
   container: {
     marginTop: StatusBar.currentHeight,
     backgroundColor: 'white',
+    marginBottom: 60,
+    paddingBottom: 20,
   },
   title: {
-    paddingLeft: 20,
     paddingTop: 20,
-    color: 'darkgrey',
+    marginBottom: 10,
+    color: 'black',
+    fontFamily: 'sans-serif-condensed',
+    fontSize: 24,
+    textAlign: 'center',
+  },
+  itemContainer: {
+    height: 80,
+    elevation: 3,
+    borderColor: 'gray',
+    borderRadius: 3,
+    flexDirection: 'row',
+    marginHorizontal: 20,
+    alignItems: 'center',
   },
 });

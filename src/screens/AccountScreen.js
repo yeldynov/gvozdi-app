@@ -4,20 +4,16 @@ import { Text } from 'react-native-elements';
 import { SafeAreaView } from 'react-navigation';
 import Spacer from '../components/Spacer';
 import { Context as AuthContext } from '../context/AuthContext';
-import { Context as SessionContext } from '../context/SessionContext';
 import { FontAwesome } from '@expo/vector-icons';
-import Statistics from '../components/Statistics';
+import Title from '../components/Title';
 
 const AccountScreen = () => {
   const { signout } = useContext(AuthContext);
-  const { state } = useContext(SessionContext);
 
   return (
     <SafeAreaView style={styles.container}>
       <Spacer>
-        <Text h4>Настройки Аккаунта</Text>
-        <Spacer />
-        <Statistics state={state} />
+        <Title>Настройки Аккаунта</Title>
         <Spacer />
         <TouchableOpacity style={styles.button} onPress={signout}>
           <Text style={styles.buttonText}>Сменить Пользователя</Text>
