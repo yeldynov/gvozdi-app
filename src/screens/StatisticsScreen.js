@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, StatusBar } from 'react-native';
+import { StyleSheet, StatusBar } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-navigation';
 import Statistics from '../components/Statistics';
@@ -22,7 +22,7 @@ StatisticsScreen.navigationOptions = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight,
+    paddingTop: StatusBar.currentHeight,
   },
 });
 

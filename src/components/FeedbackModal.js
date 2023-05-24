@@ -77,11 +77,14 @@ const styles = StyleSheet.create({
   },
   buttonClose: {
     backgroundColor: 'darkgreen',
+    padding: 20,
+    backgroundColor: '#47A992',
   },
   textStyle: {
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
+    fontSize: 18,
   },
   modalText: {
     marginBottom: 15,

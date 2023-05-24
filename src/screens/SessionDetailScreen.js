@@ -5,7 +5,7 @@ import { Context as SessionContext } from '../context/SessionContext';
 import moment from 'moment';
 import Spacer from '../components/Spacer';
 import { Octicons } from '@expo/vector-icons';
-import ConfirmRemoveModal from '../components/CofirmRemoveModal';
+import ConfirmModal from '../components/CofirmModal';
 
 const SessionDetailScreen = ({ navigation }) => {
   const { state, deleteSession } = useContext(SessionContext);
@@ -38,10 +38,12 @@ const SessionDetailScreen = ({ navigation }) => {
         <Text style={styles.removeText}>Удалить Сессию</Text>
         <Octicons name='repo-deleted' size={36} color='red' />
       </TouchableOpacity>
-      <ConfirmRemoveModal
+      <ConfirmModal
         isVisible={isVisible}
         onClose={() => setIsVisible(false)}
         onConfirm={removeSession}
+        message='Вы уверены, что хотите удалить эту сессию?'
+        confirmButtonMessage='Удалить'
       />
     </View>
   );

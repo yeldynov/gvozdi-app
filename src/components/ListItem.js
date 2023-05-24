@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import moment from 'moment';
-import uri from '../../assets/gvozdi-icon.png';
+import uri from '../../assets/icons/icon3.png';
 
 const ListItem = ({ item }) => {
   return (

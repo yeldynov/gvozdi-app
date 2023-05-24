@@ -1,21 +1,27 @@
 import React, { useState } from 'react';
 import { View, Text, Modal, TouchableOpacity, StyleSheet } from 'react-native';
 
-const ConfirmRemoveModal = ({ isVisible, onClose, onConfirm }) => {
+const ConfirmModal = ({
+  isVisible,
+  onClose,
+  onConfirm,
+  message,
+  confirmButtonMessage,
+  titleText = 'Подтверждение',
+  rejectButtonMessage = 'Отмена',
+}) => {
   return (
     <Modal visible={isVisible} transparent animationType='fade'>
       <View style={styles.container}>
         <View style={styles.modal}>
-          <Text style={styles.title}>Подтверждение</Text>
-          <Text style={styles.message}>
-            Вы уверены, что хотите удалить эту сессию?
-          </Text>
+          <Text style={styles.title}>{titleText}</Text>
+          <Text style={styles.message}>{message}</Text>
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.cancelButton} onPress={onClose}>
-              <Text style={styles.buttonText}>Отмена</Text>
+              <Text style={styles.buttonText}>{rejectButtonMessage}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.confirmButton} onPress={onConfirm}>
-              <Text style={styles.buttonText}>Удалить</Text>
+              <Text style={styles.buttonText}>{confirmButtonMessage}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -36,6 +42,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 20,
     alignItems: 'center',
+    width: '90%',
   },
   title: {
     fontSize: 18,
@@ -52,20 +59,21 @@ const styles = StyleSheet.create({
   },
   cancelButton: {
     backgroundColor: '#ccc',
-    padding: 10,
+    padding: 20,
     borderRadius: 5,
     marginRight: 10,
   },
   confirmButton: {
-    backgroundColor: 'red',
-    padding: 10,
+    backgroundColor: 'darkorange',
+    padding: 20,
     borderRadius: 5,
   },
   buttonText: {
     color: '#fff',
     fontWeight: 'bold',
     textAlign: 'center',
+    fontSize: 18,
   },
 });
 
-export default ConfirmRemoveModal;
+export default ConfirmModal;

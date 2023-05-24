@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
-import { Text, Button, Input } from 'react-native-elements';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Text, Input } from 'react-native-elements';
 import Spacer from './Spacer';
+import { FontAwesome } from '@expo/vector-icons';
 
 const AuthForm = ({
   headerText,
@@ -14,6 +15,9 @@ const AuthForm = ({
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
+    useState(false);
 
   function submit() {
     if (isSignUp) {
@@ -39,24 +43,50 @@ const AuthForm = ({
         autoCorrect={false}
       />
       <Spacer />
-      <Input
-        secureTextEntry
-        label='Пароль'
-        value={password}
-        onChangeText={setPassword}
-        autoCapitalize='none'
-        autoCorrect={false}
-      />
-
-      {isSignUp && (
+      <View style={styles.inputContainer}>
         <Input
-          secureTextEntry
-          label='Подтвердите пароль'
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
+          secureTextEntry={!isPasswordVisible}
+          label='Пароль'
+          value={password}
+          onChangeText={setPassword}
           autoCapitalize='none'
           autoCorrect={false}
+          style={styles.input}
         />
+        <TouchableOpacity
+          onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+        >
+          <FontAwesome
+            name={isPasswordVisible ? 'eye' : 'eye-slash'}
+            size={24}
+            color='gray'
+          />
+        </TouchableOpacity>
+      </View>
+
+      {isSignUp && (
+        <View style={styles.inputContainer}>
+          <Input
+            secureTextEntry={!isConfirmPasswordVisible}
+            label='Подтвердите пароль'
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+            autoCapitalize='none'
+            autoCorrect={false}
+            style={styles.input}
+          />
+          <TouchableOpacity
+            onPress={() =>
+              setIsConfirmPasswordVisible(!isConfirmPasswordVisible)
+            }
+          >
+            <FontAwesome
+              name={isConfirmPasswordVisible ? 'eye' : 'eye-slash'}
+              size={24}
+              color='gray'
+            />
+          </TouchableOpacity>
+        </View>
       )}
 
       {errorMessage && <Text style={styles.errorMessage}>{errorMessage}</Text>}
@@ -85,6 +115,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'red',
     marginLeft: 15,
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '90%',
+  },
+  input: {
+    flex: 1,
   },
 });
 
