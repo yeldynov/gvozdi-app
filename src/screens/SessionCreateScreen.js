@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, StatusBar, Text } from 'react-native';
+import { StyleSheet, StatusBar, Text, Image } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import Spacer from '../components/Spacer';
 import { FontAwesome } from '@expo/vector-icons';
+import { Foundation } from '@expo/vector-icons';
 import Stopwatch from '../components/Stopwatch';
 import RandomImage from '../components/RandomImage';
 
@@ -21,8 +22,19 @@ const SessionCreateScreen = () => {
 
 SessionCreateScreen.navigationOptions = {
   title: 'Практика',
-  tabBarIcon: <FontAwesome name='plus' size={24} color='white' />,
+  tabBarIcon: (
+    <Image
+      source={require('../../assets/details_4.png')}
+      style={{ width: 24, height: 24 }}
+    />
+  ),
 };
+// SessionCreateScreen.navigationOptions = {
+//   title: 'Практика',
+//   tabBarIcon: <FontAwesome name='plus' size={24} color='white' />,
+// tabBarIcon: <Foundation name='foot' size={24} color='white' />,
+
+// };
 
 const styles = StyleSheet.create({
   createText: {
@@ -30,14 +42,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginHorizontal: 10,
   },
-  image: {
-    width: '90%',
-    height: '50%',
-    alignSelf: 'center',
-  },
   title: {
     alignSelf: 'center',
-    color: 'lightgray',
+    color: '#9B9B9B',
     height: '50%',
   },
   container: {

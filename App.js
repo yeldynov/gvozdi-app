@@ -41,9 +41,9 @@ const switchNavigator = createSwitchNavigator({
       Account: AccountScreen,
     },
     {
-      barStyle: { backgroundColor: 'darkorange' },
+      barStyle: { backgroundColor: '#FF5500' },
       activeColor: 'white',
-      inactiveColor: 'lightgray',
+      inactiveColor: '#9B9B9B',
     }
   ),
 });

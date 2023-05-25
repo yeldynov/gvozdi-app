@@ -1,6 +1,13 @@
-import React from 'react';
-import { StyleSheet, View, Alert, Modal, Pressable } from 'react-native';
-import { Text, Input } from 'react-native-elements';
+import React, { useState } from 'react';
+import {
+  StyleSheet,
+  View,
+  Alert,
+  Modal,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
+import { Text, Input, Textarea } from 'react-native-elements';
 import moment from 'moment';
 
 const FeedbackModal = ({
@@ -11,6 +18,12 @@ const FeedbackModal = ({
   setFeedback,
   onSave,
 }) => {
+  const [saving, setSaving] = useState(false);
+  function handleSave() {
+    setSaving(true);
+    onSave().then(() => setSaving(false));
+  }
+
   return (
     <Modal
       animationType='fade'
@@ -29,17 +42,29 @@ const FeedbackModal = ({
             )}{' '}
           </Text>
           <Input
+            style={styles.input}
+            labelStyle={styles.label}
             value={feedback}
+            autoFocus
             onChangeText={setFeedback}
             label='Как вы себя чувствуете?'
             placeholder=''
           />
-          <Pressable
-            style={[styles.button, styles.buttonClose]}
-            onPress={onSave}
-          >
-            <Text style={styles.textStyle}>Сохранить</Text>
-          </Pressable>
+          {!saving ? (
+            <TouchableOpacity
+              style={[styles.button, styles.buttonClose]}
+              onPress={handleSave}
+            >
+              <Text style={styles.textStyle}>Сохранить</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              disabled
+              style={[styles.button, styles.buttonCloseDisabled]}
+            >
+              <ActivityIndicator size='large' />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </Modal>
@@ -57,9 +82,9 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 10,
-    backgroundColor: 'lightgray',
-    borderRadius: 20,
-    padding: 35,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 40,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
@@ -78,16 +103,32 @@ const styles = StyleSheet.create({
   buttonClose: {
     backgroundColor: 'darkgreen',
     padding: 20,
-    backgroundColor: '#47A992',
+    backgroundColor: '#008C8C',
+  },
+  buttonCloseDisabled: {
+    backgroundColor: 'darkgreen',
+    padding: 20,
+    backgroundColor: '#9B9B9B',
   },
   textStyle: {
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 18,
+    fontFamily: 'sans-serif-condensed',
   },
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
+    color: '#002C7D',
+    fontFamily: 'sans-serif-condensed',
+  },
+  input: {
+    color: '#002C7D',
+    fontFamily: 'sans-serif-condensed',
+  },
+  label: {
+    color: '#002C7D',
+    fontFamily: 'sans-serif-condensed',
   },
 });

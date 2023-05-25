@@ -1,11 +1,19 @@
 import React, { useContext, useState } from 'react';
-import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  SafeAreaView,
+  Image,
+  View,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
 import { Text } from 'react-native-elements';
 import { Context as SessionContext } from '../context/SessionContext';
 import moment from 'moment';
 import Spacer from '../components/Spacer';
 import { Octicons } from '@expo/vector-icons';
 import ConfirmModal from '../components/CofirmModal';
+import RandomImage from '../components/RandomImage';
 
 const SessionDetailScreen = ({ navigation }) => {
   const { state, deleteSession } = useContext(SessionContext);
@@ -21,57 +29,120 @@ const SessionDetailScreen = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.container}>
-      <Image
-        source={require('../../assets/sessionDetails.jpeg')}
-        style={styles.image}
-      />
+    <SafeAreaView style={styles.container}>
+      <View style={styles.imageContainer}>
+        <Image
+          source={require('../../assets/details_3.png')}
+          style={styles.image}
+        />
+      </View>
       <Spacer />
-      <Text h4>Дата: {moment(session?.date).format('YYYY-MM-DD hh:mm')}</Text>
-      <Text h4>Длительность: {moment(session?.duration).format('mm:ss')}</Text>
-      <Text h4>Отзыв: {session?.feedback}</Text>
-      <Spacer />
-      <TouchableOpacity
-        onPress={() => setIsVisible(true)}
-        style={styles.remove}
-      >
-        <Text style={styles.removeText}>Удалить Сессию</Text>
-        <Octicons name='repo-deleted' size={36} color='red' />
-      </TouchableOpacity>
-      <ConfirmModal
-        isVisible={isVisible}
-        onClose={() => setIsVisible(false)}
-        onConfirm={removeSession}
-        message='Вы уверены, что хотите удалить эту сессию?'
-        confirmButtonMessage='Удалить'
-      />
-    </View>
+
+      {/* <Spacer>
+        <RandomImage
+          customStyles={{
+            width: Dimensions.get('window').width / 1.5,
+            height: Dimensions.get('window').height / 3,
+          }}
+        />
+      </Spacer> */}
+      <View style={styles.outerContainer}>
+        <View style={styles.textGroup}>
+          <Text style={styles.textKey}>Дата:</Text>
+          <Text style={styles.textValue}>
+            {moment(session?.date).format('DD MMM YYYY hh:mm')}
+          </Text>
+        </View>
+        <View style={styles.textGroup}>
+          <Text style={styles.textKey}>Длительность:</Text>
+          <Text style={styles.textValue}>
+            {moment(session?.duration).format('mm:ss')}
+          </Text>
+        </View>
+        <View style={styles.feedbackGroup}>
+          <Text style={styles.textKey}>Отзыв:</Text>
+          <Text style={styles.textValue}>{session?.feedback}</Text>
+        </View>
+        <Spacer />
+        <TouchableOpacity
+          onPress={() => setIsVisible(true)}
+          style={styles.removeBtn}
+        >
+          <Text style={styles.removeText}>Удалить Сессию</Text>
+          <Octicons name='trash' size={36} color='red' />
+        </TouchableOpacity>
+        <ConfirmModal
+          isVisible={isVisible}
+          onClose={() => setIsVisible(false)}
+          onConfirm={removeSession}
+          message='Вы уверены, что хотите удалить эту сессию?'
+          confirmButtonMessage='Удалить'
+        />
+      </View>
+    </SafeAreaView>
   );
 };
 
 SessionDetailScreen.navigationOptions = () => {
   return {
-    headerTitle: 'Детали Сессии',
+    headerShown: false,
   };
 };
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
+    flex: 1,
     justifyContent: 'center',
   },
+  outerContainer: {
+    marginHorizontal: 40,
+  },
   image: {
-    width: '90%',
-    height: '50%',
+    width: Dimensions.get('window').width - 100,
+    height: Dimensions.get('window').height / 2,
+    resizeMode: 'contain',
     alignSelf: 'center',
   },
-  remove: {
+  removeBtn: {
+    paddingVertical: 16,
+    paddingHorizontal: 40,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
+    borderWidth: 1,
+    backgroundColor: '#fff',
+    borderColor: '#FF3333',
+    borderRadius: 24,
+    marginTop: 30,
   },
   removeText: {
     marginRight: 10,
-    fontSize: 16,
+    fontSize: 18,
+    fontFamily: 'sans-serif-condensed',
+    color: '#FF3333',
+  },
+  textKey: {
+    fontWeight: 'bold',
+    color: '#002C7D',
+    fontSize: 18,
+    textAlign: 'left',
+    fontFamily: 'sans-serif-condensed',
+  },
+  textValue: {
+    color: '#002C7D',
+    fontFamily: 'sans-serif-condensed',
+    fontSize: 18,
+    textAlign: 'justify',
+  },
+  textGroup: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  feedbackGroup: {
+    marginTop: 10,
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
 });
 

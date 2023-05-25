@@ -48,23 +48,25 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: '#002C7D',
   },
   message: {
     fontSize: 16,
     marginBottom: 20,
     textAlign: 'center',
+    color: '#008C8C',
   },
   buttonContainer: {
     flexDirection: 'row',
   },
   cancelButton: {
-    backgroundColor: '#ccc',
+    backgroundColor: '#9B9B9B',
     padding: 20,
     borderRadius: 5,
     marginRight: 10,
   },
   confirmButton: {
-    backgroundColor: 'darkorange',
+    backgroundColor: '#FF5500',
     padding: 20,
     borderRadius: 5,
   },

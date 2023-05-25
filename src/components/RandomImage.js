@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Image, Dimensions } from 'react-native';
 
-const RandomImage = () => {
+const RandomImage = ({ customStyles }) => {
   const images = [
     require('../../assets/stopwatch/1.jpg'),
     require('../../assets/stopwatch/2.jpg'),
@@ -41,7 +41,7 @@ const RandomImage = () => {
 
   return (
     <View>
-      <Image source={randomImage} style={styles.image} />
+      <Image source={randomImage} style={[styles.image, customStyles]} />
     </View>
   );
 };

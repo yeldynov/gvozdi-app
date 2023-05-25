@@ -29,14 +29,14 @@ const Chart = ({ labels, averageLineDataset, durations, accumulatedData }) => {
       <Text style={styles.chartTitle}>Статистика по дням:</Text>
       <LineChart
         data={daysChartData}
-        width={Dimensions.get('window').width - 20} // Adjust the width of the chart
+        width={Dimensions.get('window').width - 40} // Adjust the width of the chart
         height={Dimensions.get('window').height / 2.5} // Adjust the height of the chart
         yAxisSuffix=' мин'
         chartConfig={{
           backgroundGradientFrom: '#ffffff',
           backgroundGradientTo: '#ffffff',
           decimalPlaces: 0, // Number of decimal places in Y-axis labels
-          color: (opacity = 1) => `rgba(0, 100, 100, ${opacity})`,
+          color: (opacity = 1) => `rgba(0,44, 125, ${opacity})`,
           style: {
             borderRadius: 16,
           },
@@ -52,14 +52,14 @@ const Chart = ({ labels, averageLineDataset, durations, accumulatedData }) => {
       <Text style={styles.chartTitle}>Накопленный Итог:</Text>
       <LineChart
         data={accumulatedChartData}
-        width={Dimensions.get('window').width - 20} // Adjust the width of the chart
+        width={Dimensions.get('window').width - 40} // Adjust the width of the chart
         height={Dimensions.get('window').height / 2.5} // Adjust the height of the chart
         yAxisSuffix=' мин'
         chartConfig={{
           backgroundGradientFrom: '#ffffff',
           backgroundGradientTo: '#ffffff',
           decimalPlaces: 0, // Number of decimal places in Y-axis labels
-          color: (opacity = 1) => `rgba(0, 50, 150, ${opacity})`,
+          color: (opacity = 1) => `rgba(0, 140, 140, ${opacity})`,
           style: {
             borderRadius: 16,
           },
@@ -78,10 +78,11 @@ const Chart = ({ labels, averageLineDataset, durations, accumulatedData }) => {
 
 const styles = StyleSheet.create({
   chartTitle: {
-    fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 18,
-    marginBottom: 10,
+    marginVertical: 10,
+    color: '#002C7D',
+    fontFamily: 'sans-serif-condensed',
   },
 });
 

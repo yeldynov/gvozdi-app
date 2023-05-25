@@ -115,15 +115,16 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   startButton: {
-    backgroundColor: 'darkorange',
+    backgroundColor: '#FF5500',
   },
   stopButton: {
-    backgroundColor: '#E06469',
+    backgroundColor: '#FF3333',
   },
   buttonText: {
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: 'bold',
     color: 'white',
+    fontFamily: 'sans-serif-condensed',
   },
   // Stopwatch styles
   stopWatchContainer: {
@@ -132,8 +133,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 3,
-    backgroundColor: 'darkgray',
-    borderColor: 'darkorange',
+    backgroundColor: '#fff',
+    borderColor: '#00A896',
     borderRadius: 24,
     marginBottom: 10,
   },
@@ -141,6 +142,6 @@ const styles = StyleSheet.create({
     fontSize: 48,
     fontWeight: 'bold',
     letterSpacing: 1,
-    color: 'white',
+    color: '#002C7D',
   },
 });

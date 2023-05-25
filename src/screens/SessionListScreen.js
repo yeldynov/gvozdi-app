@@ -6,6 +6,7 @@ import {
   View,
   StatusBar,
   ActivityIndicator,
+  Text,
 } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
 import { Context as SessionContext } from '../context/SessionContext';
@@ -24,13 +25,25 @@ const SessionListScreen = ({ navigation }) => {
     });
   }, []);
 
+  if (state.length < 1 && !isLoading) {
+    return (
+      <View style={styles.container}>
+        <NavigationEvents onWillFocus={fetchSessions} />
+        <Title>История Гвоздестояний</Title>
+        <Text style={styles.text}>
+          История чиста. Давайте встанем на гвозди...
+        </Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <NavigationEvents onWillFocus={fetchSessions} />
       <Title>История Гвоздестояний</Title>
       {isLoading ? (
         <View>
-          <ActivityIndicator size='large' color='orange' />
+          <ActivityIndicator size='large' color='#FF5500' />
         </View>
       ) : (
         <FlatList
@@ -67,14 +80,13 @@ export default SessionListScreen;
 const styles = StyleSheet.create({
   container: {
     paddingTop: StatusBar.currentHeight,
-    backgroundColor: 'white',
     marginBottom: 60,
     paddingBottom: 20,
   },
   title: {
     paddingTop: 20,
     marginBottom: 10,
-    color: 'black',
+    color: '#002C7D',
     fontFamily: 'sans-serif-condensed',
     fontSize: 24,
     textAlign: 'center',
@@ -82,10 +94,19 @@ const styles = StyleSheet.create({
   itemContainer: {
     height: 80,
     elevation: 3,
-    borderColor: 'gray',
+    borderColor: '#9B9B9B',
     borderRadius: 3,
     flexDirection: 'row',
     marginHorizontal: 20,
     alignItems: 'center',
+  },
+  text: {
+    fontStyle: 'italic',
+    marginTop: 30,
+    marginHorizontal: 30,
+    fontSize: 20,
+    textAlign: 'center',
+    fontFamily: 'sans-serif-condensed',
+    color: '#9B9B9B',
   },
 });

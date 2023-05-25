@@ -2,7 +2,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const instance = axios.create({
-  baseURL: 'https://f016-195-140-224-19.ngrok-free.app',
+  baseURL: 'https://gvozdi-app.onrender.com/',
 });
 
 instance.interceptors.request.use(

@@ -30,17 +30,19 @@ AccountScreen.navigationOptions = {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: 'darkorange',
+    backgroundColor: '#FF5500',
     padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
     borderRadius: 10,
-    borderColor: 'darkorange',
+    borderColor: '#FF5500',
   },
   buttonText: {
     fontSize: 16,
     fontWeight: 'bold',
+    fontFamily: 'sans-serif-condensed',
+    color: '#fff',
   },
   container: {
     flex: 1,

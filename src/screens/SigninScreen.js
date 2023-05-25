@@ -17,7 +17,7 @@ const SigninScreen = () => {
     >
       <NavigationEvents onWillFocus={clearErrorMessage} />
       <AuthForm
-        headerText='Войдите в аккаунт 🤙'
+        headerText='Войти в аккаунт 🚪🚶'
         errorMessage={state.errorMessage}
         submitButtonText='Войти'
         onSubmit={signin}
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingBottom: 250,
-    backgroundColor: '#FCF9BE',
+    // backgroundColor: 'rgba(254, 220, 0,0.2)',
   },
 });
 

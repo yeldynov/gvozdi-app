@@ -17,7 +17,7 @@ const SignupScreen = () => {
     >
       <NavigationEvents onWillFocus={clearErrorMessage} />
       <AuthForm
-        headerText='Создать аккаунт 😤'
+        headerText='Создать аккаунт ✍️'
         errorMessage={state.errorMessage}
         submitButtonText='Регистрация'
         onSubmit={signup}
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingBottom: 250,
-    backgroundColor: '#E8F3D6',
+    // backgroundColor: 'rgba(254, 220, 0,0.3)',
   },
 });
 

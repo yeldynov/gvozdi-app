@@ -2,12 +2,12 @@
   "expo": {
     "name": "Встань на гвозди!",
     "slug": "client",
-    "version": "1.0.2",
+    "version": "1.2.0",
     "orientation": "portrait",
-    "icon": "./assets/icons/icon7.png",
+    "icon": "./assets/logo_main.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/icons/icon7.png",
+      "image": "./assets/splash_main.png",
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
@@ -17,13 +17,13 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icons/icon7.png",
+        "foregroundImage": "./assets/logo_main.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.shangnik.gvozdi"
     },
     "web": {
-      "favicon": "./assets/icons/icon7.png"
+      "favicon": "./assets/logo_main.png"
     },
     "extra": {
       "eas": {
