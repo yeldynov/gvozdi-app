@@ -2,7 +2,7 @@
   "expo": {
     "name": "Встань на гвозди!",
     "slug": "client",
-    "version": "1.2.0",
+    "version": "1.4.2",
     "orientation": "portrait",
     "icon": "./assets/logo_main.png",
     "userInterfaceStyle": "light",

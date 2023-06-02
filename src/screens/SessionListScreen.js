@@ -4,7 +4,6 @@ import {
   FlatList,
   TouchableOpacity,
   View,
-  StatusBar,
   ActivityIndicator,
   Text,
 } from 'react-native';
@@ -13,10 +12,12 @@ import { Context as SessionContext } from '../context/SessionContext';
 import Spacer from '../components/Spacer';
 import ListItem from '../components/ListItem';
 import Title from '../components/Title';
-import 'moment/locale/ru';
+import i18n from '../../i18n/i18n';
+import { ThemeContext } from '../context/ThemeContext';
 
 const SessionListScreen = ({ navigation }) => {
   const { state, fetchSessions } = useContext(SessionContext);
+  const { isDarkTheme } = useContext(ThemeContext);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -25,22 +26,28 @@ const SessionListScreen = ({ navigation }) => {
     });
   }, []);
 
+  const containerStyle = isDarkTheme
+    ? styles.darkContainer
+    : styles.lightContainer;
+
+  const itemContainerStyle = isDarkTheme
+    ? styles.darkItemContainer
+    : styles.lightItemContainer;
+
   if (state.length < 1 && !isLoading) {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, containerStyle]}>
         <NavigationEvents onWillFocus={fetchSessions} />
-        <Title>История Гвоздестояний</Title>
-        <Text style={styles.text}>
-          История чиста. Давайте встанем на гвозди...
-        </Text>
+        <Title>{i18n.t('historyTitleText')}</Title>
+        <Text style={styles.text}>{i18n.t('cleanHistoryText')}</Text>
       </View>
     );
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, containerStyle]}>
       <NavigationEvents onWillFocus={fetchSessions} />
-      <Title>История Гвоздестояний</Title>
+      <Title>{i18n.t('historyTitleText')}</Title>
       {isLoading ? (
         <View>
           <ActivityIndicator size='large' color='#FF5500' />
@@ -55,7 +62,7 @@ const SessionListScreen = ({ navigation }) => {
                 onPress={() => {
                   navigation.navigate('SessionDetail', { _id: item._id });
                 }}
-                style={styles.itemContainer}
+                style={[styles.itemContainer, itemContainerStyle]}
               >
                 <ListItem item={item} />
               </TouchableOpacity>
@@ -79,10 +86,10 @@ export default SessionListScreen;
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: StatusBar.currentHeight,
-    marginBottom: 60,
-    paddingBottom: 20,
+    flex: 1,
   },
+  lightContainer: { backgroundColor: '#FFFFFF' },
+  darkContainer: { backgroundColor: '#1E1E1E' },
   title: {
     paddingTop: 20,
     marginBottom: 10,
@@ -98,8 +105,11 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     flexDirection: 'row',
     marginHorizontal: 20,
+    marginVertical: 3,
     alignItems: 'center',
   },
+  lightItemContainer: { backgroundColor: '#FFFFFF' },
+  darkItemContainer: { backgroundColor: '#333333' },
   text: {
     fontStyle: 'italic',
     marginTop: 30,

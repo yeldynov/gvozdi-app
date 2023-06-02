@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   StyleSheet,
   TouchableOpacity,
@@ -9,6 +9,9 @@ import { Text, Input } from 'react-native-elements';
 import Spacer from './Spacer';
 import { FontAwesome } from '@expo/vector-icons';
 import Title from './Title';
+
+import i18n from '../../i18n/i18n';
+import { ThemeContext } from '../context/ThemeContext';
 
 const AuthForm = ({
   headerText,
@@ -25,11 +28,14 @@ const AuthForm = ({
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
     useState(false);
   const [processing, setProcessing] = useState(false);
+  const { isDarkTheme } = useContext(ThemeContext);
+
+  const labelStyle = isDarkTheme ? styles.darkLabel : styles.lightLabel;
 
   function submit() {
     if (isSignUp) {
       if (password !== confirmPassword) {
-        setError('Пароли не совпадают.');
+        setError(i18n.t('passwordsDontMatchErrorText'));
         return;
       }
     }
@@ -44,24 +50,24 @@ const AuthForm = ({
       </Spacer>
       <Input
         label='Email'
-        labelStyle={styles.label}
+        labelStyle={[styles.label, labelStyle]}
         value={email}
         onChangeText={setEmail}
         autoCapitalize='none'
         autoCorrect={false}
-        style={styles.input}
+        style={[styles.input, labelStyle]}
       />
       <Spacer />
       <View style={styles.inputContainer}>
         <Input
           secureTextEntry={!isPasswordVisible}
-          labelStyle={styles.label}
-          label='Пароль'
+          labelStyle={[styles.label, labelStyle]}
+          label={i18n.t('passwordText')}
           value={password}
           onChangeText={setPassword}
           autoCapitalize='none'
           autoCorrect={false}
-          style={styles.input}
+          style={[styles.input, labelStyle]}
         />
         <TouchableOpacity
           onPress={() => setIsPasswordVisible(!isPasswordVisible)}
@@ -78,13 +84,13 @@ const AuthForm = ({
         <View style={styles.inputContainer}>
           <Input
             secureTextEntry={!isConfirmPasswordVisible}
-            label='Подтвердите пароль'
-            labelStyle={styles.label}
+            label={i18n.t('confirmPasswordText')}
+            labelStyle={[styles.label, labelStyle]}
             value={confirmPassword}
             onChangeText={setConfirmPassword}
             autoCapitalize='none'
             autoCorrect={false}
-            style={styles.input}
+            style={[styles.input, labelStyle]}
           />
           <TouchableOpacity
             onPress={() =>
@@ -150,9 +156,11 @@ const styles = StyleSheet.create({
   },
   label: {
     fontWeight: 'normal',
-    color: '#002C7D',
+    // color: '#002C7D',
     fontFamily: 'sans-serif-condensed',
   },
+  lightLabel: { color: '#002C7D' },
+  darkLabel: { color: '#00A896' },
 });
 
 export default AuthForm;

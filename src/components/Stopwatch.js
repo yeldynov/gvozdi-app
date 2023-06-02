@@ -1,25 +1,21 @@
 import React, { useRef, useContext } from 'react';
 import { useState } from 'react';
-import {
-  Alert,
-  Modal,
-  StyleSheet,
-  Pressable,
-  View,
-  Button,
-  TouchableOpacity,
-} from 'react-native';
-import { Text, Input } from 'react-native-elements';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import { Text } from 'react-native-elements';
+import { useKeepAwake } from 'expo-keep-awake';
 import StopwatchTimer from 'react-native-animated-stopwatch-timer';
-import moment from 'moment';
 import { Context as SessionContext } from '../context/SessionContext';
 import { navigate } from '../utils/navigationRef';
 import FeedbackModal from './FeedbackModal';
 import ConfirmModal from './CofirmModal';
+import i18n from '../../i18n/i18n';
+import { ThemeContext } from '../context/ThemeContext';
 
 const Stopwatch = () => {
+  useKeepAwake();
   const stopwatchTimerRef = useRef(null);
   const { createSession } = useContext(SessionContext);
+  const { isDarkTheme } = useContext(ThemeContext);
 
   const [isCounting, setIsCounting] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -51,12 +47,18 @@ const Stopwatch = () => {
     navigate('SessionList');
   }
 
+  const stopWatchContainerStyle = isDarkTheme
+    ? styles.darkContainer
+    : styles.lightContainer;
+
+  const stopWatchCharStyle = isDarkTheme ? styles.darkChar : styles.lightChar;
+
   return (
     <>
       <StopwatchTimer
         ref={stopwatchTimerRef}
-        containerStyle={styles.stopWatchContainer}
-        textCharStyle={styles.stopWatchChar}
+        containerStyle={[styles.stopWatchContainer, stopWatchContainerStyle]}
+        textCharStyle={[styles.stopWatchChar, stopWatchCharStyle]}
         trailingZeros={2}
       />
       {showConfirm && (
@@ -64,12 +66,10 @@ const Stopwatch = () => {
           isVisible={showConfirm}
           onClose={() => setShowConfirm(false)}
           onConfirm={play}
-          message='Расслабтесь. Глубоко вдохните. На выдохе, встаньте на гвозди. Первые
-          несколько минут могут быть неприятные ощущения в ступнях. Глубоко
-          вдыхайте и выдыхайте, чтобы отвлечься. Скоро боль пройдет и начнется
-          настоящая практика...'
-          confirmButtonMessage='Старт!'
-          titleText='Приготовьтесь!'
+          message={i18n.t('confirmModalPrepareMessage')}
+          confirmButtonMessage={i18n.t('confirmModalPrepareBtnText')}
+          titleText={i18n.t('confirmModalPrepareTitleText')}
+          rejectButtonMessage={i18n.t('confirmModalrejectBtnText')}
         />
       )}
       {!isCounting && (
@@ -87,14 +87,18 @@ const Stopwatch = () => {
           style={[styles.stopButton, styles.mainButton]}
           onPress={pause}
         >
-          <Text style={styles.buttonText}>Стоп!</Text>
+          <Text style={styles.buttonText}>
+            {i18n.t('stopwatchStopButtonText')}
+          </Text>
         </TouchableOpacity>
       ) : (
         <TouchableOpacity
           style={[styles.startButton, styles.mainButton]}
           onPress={() => setShowConfirm(true)}
         >
-          <Text style={styles.buttonText}>Начать!</Text>
+          <Text style={styles.buttonText}>
+            {i18n.t('stopwatchStartButtonText')}
+          </Text>
         </TouchableOpacity>
       )}
     </>
@@ -107,7 +111,7 @@ const styles = StyleSheet.create({
   // Button Styles
   mainButton: {
     borderRadius: 9999,
-    padding: 40,
+    padding: 30,
     marginHorizontal: '15%',
     elevation: 2,
     justifyContent: 'center',
@@ -128,20 +132,28 @@ const styles = StyleSheet.create({
   },
   // Stopwatch styles
   stopWatchContainer: {
-    paddingVertical: 16,
-    paddingHorizontal: 48,
-    alignItems: 'center',
-    justifyContent: 'center',
+    // paddingVertical: 16,
+    // paddingHorizontal: 48,
+    // alignItems: 'center',
+    // justifyContent: 'center',
     borderWidth: 3,
-    backgroundColor: '#fff',
-    borderColor: '#00A896',
-    borderRadius: 24,
-    marginBottom: 10,
+    // borderRadius: 24,
+    // marginBottom: 10,
+    borderRadius: 9999,
+    padding: 28,
+    marginHorizontal: '15%',
+    elevation: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
   },
   stopWatchChar: {
-    fontSize: 48,
+    fontSize: 32,
     fontWeight: 'bold',
     letterSpacing: 1,
-    color: '#002C7D',
   },
+  darkContainer: { backgroundColor: '#000', borderColor: '#FF5500' },
+  lightContainer: { backgroundColor: '#fff', borderColor: '#00A896' },
+  darkChar: { color: '#00A896' },
+  lightChar: { color: '#002C7D' },
 });

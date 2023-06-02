@@ -1,17 +1,21 @@
-import React from 'react';
-import { StyleSheet, StatusBar, Text, Image } from 'react-native';
+import React, { useContext } from 'react';
+import { StyleSheet, Text, Image, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import Spacer from '../components/Spacer';
-import { FontAwesome } from '@expo/vector-icons';
-import { Foundation } from '@expo/vector-icons';
 import Stopwatch from '../components/Stopwatch';
-import RandomImage from '../components/RandomImage';
+import { ThemeContext } from '../context/ThemeContext';
 
 const SessionCreateScreen = () => {
+  const { isDarkTheme, toggleTheme } = useContext(ThemeContext);
+
+  const containerStyle = isDarkTheme
+    ? styles.darkContainer
+    : styles.lightContainer;
+
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, containerStyle]}>
       <Spacer>
-        <RandomImage />
+        <Image style={styles.image} source={require('../../assets/man.png')} />
         <Text style={styles.createText}></Text>
         <Spacer />
         <Stopwatch />
@@ -21,7 +25,8 @@ const SessionCreateScreen = () => {
 };
 
 SessionCreateScreen.navigationOptions = {
-  title: 'Практика',
+  // title: 'Практика',
+  title: '',
   tabBarIcon: (
     <Image
       source={require('../../assets/details_4.png')}
@@ -29,12 +34,6 @@ SessionCreateScreen.navigationOptions = {
     />
   ),
 };
-// SessionCreateScreen.navigationOptions = {
-//   title: 'Практика',
-//   tabBarIcon: <FontAwesome name='plus' size={24} color='white' />,
-// tabBarIcon: <Foundation name='foot' size={24} color='white' />,
-
-// };
 
 const styles = StyleSheet.create({
   createText: {
@@ -49,7 +48,14 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    paddingTop: StatusBar.currentHeight,
+  },
+  lightContainer: { backgroundColor: '#ffffff' },
+  darkContainer: { backgroundColor: '#1E1E1E' },
+  image: {
+    width: Dimensions.get('window').width - 100,
+    height: Dimensions.get('window').height / 2,
+    resizeMode: 'contain',
+    alignSelf: 'center',
   },
 });
 

@@ -1,15 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, View, ScrollView, ActivityIndicator } from 'react-native';
-import { NavigationEvents } from 'react-navigation';
 import { Text } from 'react-native-elements';
 import moment from 'moment';
 import Spacer from './Spacer';
 import Title from './Title';
 import Chart from './Chart';
 import { Context as SessionContext } from '../context/SessionContext';
+import i18n from '../../i18n/i18n';
+import { ThemeContext } from '../context/ThemeContext';
 
 const Statistics = () => {
   const { state, fetchSessions } = useContext(SessionContext);
+  const { isDarkTheme } = useContext(ThemeContext);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -20,23 +22,24 @@ const Statistics = () => {
 
   if (state.length < 1 && !isLoading) {
     return (
-      <Text style={styles.emptyText}>
-        Статистика чиста. Давайте встанем на гвозди...
-      </Text>
+      <Text style={styles.emptyText}>{i18n.t('cleanStatisticsText')}</Text>
     );
   }
 
   const totalTime = state.reduce((acc, curr) => curr.duration + acc, 0);
-  const average = (moment(totalTime).minutes() / state.length).toFixed(0);
+  const average = (
+    moment.duration(totalTime).asMinutes() / state.length
+  ).toFixed(0);
 
   const durationsByDate = {};
   state.forEach((item) => {
     const date = moment(item.date).format('DD/MM');
 
     if (durationsByDate[date]) {
-      durationsByDate[date] += moment(item.duration).minutes();
+      durationsByDate[date] += moment.duration(item.duration).asMinutes();
+      console.log(durationsByDate);
     } else {
-      durationsByDate[date] = moment(item.duration).minutes();
+      durationsByDate[date] = moment.duration(item.duration).asMinutes();
     }
   });
 
@@ -66,6 +69,8 @@ const Statistics = () => {
       return acc;
     }, []);
 
+  const textStyle = isDarkTheme ? styles.darkText : styles.lightText;
+
   return (
     <ScrollView>
       {isLoading ? (
@@ -74,22 +79,37 @@ const Statistics = () => {
         </View>
       ) : (
         <View style={styles.container}>
-          <Text style={styles.text}>Итого: {state.length} сессий</Text>
-          <Text style={styles.text}>Итого: {durations.length} дней</Text>
-          <Text style={styles.text}>
-            Всего: {moment(totalTime).format('mm')} мин{' '}
-            {moment(totalTime).format('ss')} сек
+          <Text style={[styles.text, textStyle]}>
+            {i18n.t('statisticsTotal')} {state.length}
+            {i18n.t('statisticsSessionsForText')} {durations.length}
+            {i18n.t('statisticsDaysText')}
           </Text>
-          <Text style={styles.text}>Среднее на сессию: {average} мин</Text>
-          <Text style={styles.text}>Среднее в день: {averageDuration} мин</Text>
+          <Text style={[styles.text, textStyle]}>
+            {i18n.t('statisticsAllText')} {moment.utc(totalTime).format('hh')}
+            {i18n.t('statisticsHourText')}
+            {moment(totalTime).format('mm')} {i18n.t('statisticsMinText')}
+            {moment(totalTime).format('ss')} {i18n.t('statisticSecText')}
+          </Text>
+          <Text style={[styles.text, textStyle]}>
+            {i18n.t('statisticsAveragePerSessionText')} {average}
+            {i18n.t('statisticsMinText')}
+          </Text>
+          <Text style={[styles.text, textStyle]}>
+            {i18n.t('statisticsAveragePerDayText')} {averageDuration}
+            {i18n.t('statisticsMinText')}
+          </Text>
           <Spacer />
-          <Title h4>Последний раз:</Title>
-          <Text style={styles.text} h5>
-            Время: {moment(state[0]?.duration).format('mm')} мин{' '}
-            {moment(state[0]?.duration).format('ss')} сек
+          <Title h4>{i18n.t('statisticsLastTimeText')}</Title>
+          <Text style={[styles.text, textStyle]} h5>
+            {i18n.t('statisticsTimeText')}
+            {moment.duration(state[0]?.duration).asMinutes().toFixed(0)}
+            {i18n.t('statisticsMinText')}
+            {moment(state[0]?.duration).format('ss')}
+            {i18n.t('statisticSecText')}
           </Text>
-          <Text style={styles.text} h5>
-            Дата: {moment(state[0]?.date).format('DD MMM YYYY')} г.
+          <Text style={[styles.text, textStyle]} h5>
+            {i18n.t('statisticsDateText')}
+            {moment(state[0]?.date).format('DD/MM/YYYY')}
           </Text>
           <Spacer />
           <Spacer />
@@ -114,10 +134,11 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   text: {
-    color: '#008C8C',
     fontFamily: 'sans-serif-condensed',
     fontSize: 16,
   },
+  darkText: { color: '#000' },
+  darkText: { color: '#fff' },
   emptyText: {
     fontStyle: 'italic',
     marginTop: 30,

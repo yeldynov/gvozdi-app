@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
@@ -14,8 +14,12 @@ import StatisticsScreen from './src/screens/StatisticsScreen';
 
 import { Provider as AuthProvider } from './src/context/AuthContext';
 import { Provider as SessionProvider } from './src/context/SessionContext';
+import { ThemeProvider } from './src/context/ThemeContext';
 import { setNavigator } from './src/utils/navigationRef';
 import { FontAwesome } from '@expo/vector-icons';
+
+import trackerApi from './src/api/tracker';
+import i18n from './i18n/i18n';
 
 const sessionListFlow = createStackNavigator({
   SessionList: SessionListScreen,
@@ -23,7 +27,8 @@ const sessionListFlow = createStackNavigator({
 });
 
 sessionListFlow.navigationOptions = {
-  title: 'История',
+  // title: i18n.t('historyNavigationText'),
+  title: '',
   tabBarIcon: <FontAwesome name='th-list' size={24} color='white' />,
 };
 
@@ -51,14 +56,20 @@ const switchNavigator = createSwitchNavigator({
 const App = createAppContainer(switchNavigator);
 
 export default () => {
+  useEffect(() => {
+    async () => await trackerApi.get('/')();
+  }, []);
+
   return (
     <AuthProvider>
       <SessionProvider>
-        <App
-          ref={(navigator) => {
-            setNavigator(navigator);
-          }}
-        />
+        <ThemeProvider>
+          <App
+            ref={(navigator) => {
+              setNavigator(navigator);
+            }}
+          />
+        </ThemeProvider>
       </SessionProvider>
     </AuthProvider>
   );

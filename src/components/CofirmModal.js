@@ -7,8 +7,8 @@ const ConfirmModal = ({
   onConfirm,
   message,
   confirmButtonMessage,
-  titleText = 'Подтверждение',
-  rejectButtonMessage = 'Отмена',
+  titleText,
+  rejectButtonMessage,
 }) => {
   return (
     <Modal visible={isVisible} transparent animationType='fade'>

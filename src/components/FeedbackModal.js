@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { Text, Input, Textarea } from 'react-native-elements';
 import moment from 'moment';
+import i18n from '../../i18n/i18n';
 
 const FeedbackModal = ({
   modalVisible,
@@ -30,7 +31,7 @@ const FeedbackModal = ({
       transparent
       visible={modalVisible}
       onRequestClose={() => {
-        Alert.alert('Modal has been closed.');
+        Alert.alert(i18n.t('alertErrorText'));
         setModalVisible(!modalVisible);
       }}
     >
@@ -47,7 +48,7 @@ const FeedbackModal = ({
             value={feedback}
             autoFocus
             onChangeText={setFeedback}
-            label='Как вы себя чувствуете?'
+            label={i18n.t('howDoYouFeelText')}
             placeholder=''
           />
           {!saving ? (
@@ -55,7 +56,9 @@ const FeedbackModal = ({
               style={[styles.button, styles.buttonClose]}
               onPress={handleSave}
             >
-              <Text style={styles.textStyle}>Сохранить</Text>
+              <Text style={styles.textStyle}>
+                {i18n.t('howDoYouFeelBtnText')}
+              </Text>
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
